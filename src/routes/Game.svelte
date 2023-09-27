@@ -18,6 +18,7 @@
 	let height: number;
 
 	let indices: number[];
+	let squareSize: number;
 
 	export function start() {
 		remaining = duration = 30 * 1000;
@@ -83,6 +84,7 @@
 	<div class="grid">
 		{#key grid}
 			<Grid
+				bind:squareSize
 				{size}
 				{width}
 				{height}
@@ -102,7 +104,7 @@
 		{/key}
 	</div>
 	<div class="info">
-		<Found {width} {height} {found} />
+		<Found {squareSize} {width} {height} {found} />
 	</div>
 </div>
 

@@ -4,32 +4,26 @@
     import {receive} from './transitions';
     import {fade} from 'svelte/transition';
 	import { curry_get_offset } from './utils';
-	import { squareSizeWritable } from './stores';
     export let found: number[];
     export let height: number;
     export let width: number;
-    let squareSize: number;
-	let scaleFactor: number;
-
-	afterUpdate(() => {
-        squareSize = $squareSizeWritable * 0.5;
-        scaleFactor = squareSize / height;	
-	});
-    $: backgroundSize = `${width * scaleFactor}px ${height * scaleFactor}px`;
-    $: get_offset = curry_get_offset(squareSize);
+    export let squareSize: number;
+    $: dimension = squareSize * 0.5;
+    $: backgroundSize = `${width * dimension / height}px ${height * dimension / height}px`;
+    $: get_offset = curry_get_offset(dimension);
 </script>
 
 <div class="found">
     {#each found as index (index)}
         <div in:fade={{delay: 500}} animate:flip={{duration: 200, delay: 500}} class="pair">
             <div class="sprite-element" 
-            style:width={`${squareSize}px`}
-            style:height={`${squareSize}px`}
+            style:width={`${dimension}px`}
+            style:height={`${dimension}px`}
             style:background-position={get_offset(index)} 
             style:background-size={backgroundSize} in:receive={{key: `${index}:a`}}/>
             <div class="sprite-element" 
-            style:width={`${squareSize}px`}
-            style:height={`${squareSize}px`} 
+            style:width={`${dimension}px`}
+            style:height={`${dimension}px`} 
             style:background-position={get_offset(index)} 
             style:background-size={backgroundSize} in:receive={{key: `${index}:b`}}/>
         </div>

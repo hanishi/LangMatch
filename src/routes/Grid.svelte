@@ -3,7 +3,6 @@
 	import Square from './Square.svelte';
 	import {onMount, onDestroy} from 'svelte';
 	import { curry_get_offset } from './utils';
-	import { squareSizeWritable } from './stores';
 	export let found: number[];
 	export let grid: number[];
 	
@@ -15,7 +14,7 @@
 	export let size: number;
 	export let width: number;
 	export let height: number;
-	let squareSize: number;
+	export let squareSize: number;
 	let scaleFactor: number;
 
 	function handle_resize() {
@@ -23,7 +22,7 @@
 		if (gridElement) {
 			squareSize = Math.floor(gridElement.clientWidth / size * 0.95);
 			scaleFactor = squareSize / height;
-			squareSizeWritable.set(squareSize)
+			// squareSizeWritable.set(squareSize)
 		}
 	}
 	$: backgroundSize = `${width * scaleFactor}px ${height * scaleFactor}px`;
